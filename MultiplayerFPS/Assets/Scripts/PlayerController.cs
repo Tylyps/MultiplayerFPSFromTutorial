@@ -2,6 +2,7 @@
 
 [RequireComponent(typeof(ConfigurableJoint))]
 [RequireComponent(typeof(PlayerMotor))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
@@ -17,13 +18,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jointMaxForce = 40f;
 
+
+    //Component caching
     private PlayerMotor motor;
     private ConfigurableJoint joint;
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         motor = GetComponent<PlayerMotor>();
         joint = GetComponent<ConfigurableJoint>();  
+        animator = GetComponent<Animator>();
 
         SetJointSettings(jointSpring);      
     }
@@ -32,14 +37,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Calcu;ate ,pve,emt ve;pcotu as a 3d vector
-        float _xMov = Input.GetAxisRaw("Horizontal");
-        float _zMov = Input.GetAxisRaw("Vertical");
+        float _xMov = Input.GetAxis("Horizontal");
+        float _zMov = Input.GetAxis("Vertical");
 
         Vector3 _movHoricontal = transform.right * _xMov;
         Vector3 _movVertical = transform.forward * _zMov;
 
         //Final movement vector
-        Vector3 _velocity = (_movHoricontal + _movVertical).normalized * speed;
+        Vector3 _velocity = (_movHoricontal + _movVertical) * speed;
+
+        //Animate movement
+        animator.SetFloat("ForwardVelocity", _zMov);
 
         //Apply movment
         motor.Move(_velocity);
