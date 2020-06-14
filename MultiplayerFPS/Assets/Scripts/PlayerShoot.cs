@@ -6,10 +6,10 @@ public class PlayerShoot : NetworkBehaviour
     private const string PLAYER_TAG = "Player";
     public PlayerWeapon weapon;
     [SerializeField]
-    private Camera cam;
+    private Camera cam = null;
 
     [SerializeField]
-    private LayerMask mask;
+    private LayerMask mask = 0;
     // Start is called before the first frame update
     void Start()
     {

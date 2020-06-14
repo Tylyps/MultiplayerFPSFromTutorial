@@ -19,7 +19,7 @@ public class Player : NetworkBehaviour
     private int currentHelth;
 
     [SerializeField]
-    private Behaviour[] disableOnDeath;
+    private Behaviour[] disableOnDeath = {};
     private bool[] wasEnabled;
 
     public void Setup(){
