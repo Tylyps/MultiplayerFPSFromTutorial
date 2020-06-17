@@ -4,9 +4,14 @@ using Mirror;
 public class PlayerShoot : NetworkBehaviour
 {
     private const string PLAYER_TAG = "Player";
-    public PlayerWeapon weapon;
+    [SerializeField]
+    private PlayerWeapon weapon = null;
     [SerializeField]
     private Camera cam = null;
+    [SerializeField]
+    private GameObject weaponGFX = null;
+    [SerializeField]
+    private string weaponLayerName = "Weapon";
 
     [SerializeField]
     private LayerMask mask = 0;
@@ -17,6 +22,8 @@ public class PlayerShoot : NetworkBehaviour
             Debug.LogError("PlaterShoot: No camera referenced!");
             this.enabled = false;
         }
+
+        weaponGFX.layer = LayerMask.NameToLayer(weaponLayerName);
     }
 
     // Update is called once per frame
