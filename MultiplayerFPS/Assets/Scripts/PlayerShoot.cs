@@ -44,13 +44,48 @@ public class PlayerShoot : NetworkBehaviour
         }
     }
 
+    //Is Called on the server when a player shoots
+    [Command]
+    void CmdOnShoot() {
+        RpcDoShootEffect();
+    }
+
+    //Is called on all clients when we need to to a shoot effect
+    [ClientRpc]
+    void RpcDoShootEffect() {
+        weaponManager.GetCurrentGraphics().muzzleFlash.Play();
+    }
+
+    //Is called on the server when we hit something takes in the hit poind ant the normal of the surface
+    [Command]
+    void CmdOnHit(Vector3 _pos, Vector3 _normal) {
+        RpcDoHitEffect(_pos, _normal);
+    }
+
+    //Is called on all clients, here we span effects
+    [ClientRpc]
+    void RpcDoHitEffect(Vector3 _pos, Vector3 _normal) {
+        GameObject _hitEffect = (GameObject)Instantiate(weaponManager.GetCurrentGraphics().hitEffectPrefab, _pos, Quaternion.LookRotation(_normal));
+
+        Destroy(_hitEffect, 2f);
+    }
+
     [Client]
     private void Shoot() {
+        if(!isLocalPlayer) {
+            return;
+        }
+
+        //We are shooting, call the OnShoot method on the server
+        CmdOnShoot();
+
         RaycastHit _hit;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out _hit, currentWeapon.range, mask)){
             if(_hit.collider.tag == PLAYER_TAG){
                 CmdPlayerShot(_hit.collider.name, currentWeapon.damage);
             }
+            // We hit something, call the OnHit method on the server
+            CmdOnHit(_hit.point, _hit.normal);
         }
     }
 
