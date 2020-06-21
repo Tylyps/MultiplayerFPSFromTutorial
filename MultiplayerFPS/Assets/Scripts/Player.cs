@@ -22,6 +22,9 @@ public class Player : NetworkBehaviour
     private Behaviour[] disableOnDeath = {};
     private bool[] wasEnabled;
 
+    [SerializeField]
+    private GameObject deathEffect = null;
+
     public void Setup(){
         wasEnabled = new bool[disableOnDeath.Length];
         for (int i = 0; i < wasEnabled.Length; i++){
@@ -31,14 +34,14 @@ public class Player : NetworkBehaviour
         SetDefaults();
     }
 
-    // void Update(){
-    //     if(!isLocalPlayer)
-    //         return;
+    void Update(){
+        if(!isLocalPlayer)
+            return;
 
-    //     if(Input.GetKeyDown(KeyCode.K)){
-    //         RpcTakeDamage(99999);
-    //     }
-    // }
+        if(Input.GetKeyDown(KeyCode.K)){
+            RpcTakeDamage(99999);
+        }
+    }
 
     [ClientRpc]
     public void RpcTakeDamage(int _amount){
@@ -56,15 +59,20 @@ public class Player : NetworkBehaviour
     private void Die() {
         isDead = true;
 
+
+        //Disable components
         for (int i = 0; i < disableOnDeath.Length; i++){
             disableOnDeath[i].enabled = false;
         }
-
+        //Disable the collider
         Collider _col = GetComponent<Collider>();
         if(_col != null){
             _col.enabled = false;
         }
 
+        //Spawn a death effect
+        GameObject _gfxIns = (GameObject)Instantiate(deathEffect, transform.position, Quaternion.identity);
+        Destroy(_gfxIns, 3f);
         Debug.Log(transform.name + "is DEAD!");
 
         //CALL RESPAWN METHOD

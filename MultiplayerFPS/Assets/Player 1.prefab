@@ -332,7 +332,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   lookSensitivity: 5
+  thrustedFuelBurnSpeed: 1
+  thrusterFuelRegenSpeed: 0.3
   thrustedForce: 1000
+  enviromentMask:
+    serializedVersion: 2
+    m_Bits: 4096
   jointSpring: 15
   jointMaxForce: 40
 --- !u!114 &7197523167722506653
@@ -545,6 +550,8 @@ MonoBehaviour:
   disableOnDeath:
   - {fileID: 2161148150554812890}
   - {fileID: 6402725073054076002}
+  deathEffect: {fileID: 605130804175558133, guid: ac55a9db9d20f5747a187bf1ef718765,
+    type: 3}
 --- !u!95 &8245929598321207426
 Animator:
   serializedVersion: 3
