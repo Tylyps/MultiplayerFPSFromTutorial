@@ -209,7 +209,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 823
+    m_Bits: 4919
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -382,6 +382,7 @@ MonoBehaviour:
   playerGraphics: {fileID: 2161148149342254795}
   playerUIPrefab: {fileID: 6558772136646750753, guid: ed3dc4f9b96a4b4468b8b1ab59bd7b58,
     type: 3}
+  playerUIInstance: {fileID: 0}
 --- !u!114 &7236935567004205489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,7 +532,7 @@ MonoBehaviour:
   cam: {fileID: 2161148150454273886}
   mask:
     serializedVersion: 2
-    m_Bits: 567
+    m_Bits: 4663
 --- !u!114 &4849884399109607362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,7 +551,12 @@ MonoBehaviour:
   disableOnDeath:
   - {fileID: 2161148150554812890}
   - {fileID: 6402725073054076002}
+  disableGameObjectsOnDeath:
+  - {fileID: 2161148149342254795}
+  - {fileID: 2161148150454273881}
   deathEffect: {fileID: 605130804175558133, guid: ac55a9db9d20f5747a187bf1ef718765,
+    type: 3}
+  spawnEffect: {fileID: 8325571158581127351, guid: 6fc2af4110672364bb986097c415294c,
     type: 3}
 --- !u!95 &8245929598321207426
 Animator:
